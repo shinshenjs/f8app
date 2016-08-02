@@ -3,6 +3,7 @@ set -ev
 if [ "$BUILD_TYPE" = jobst-ios ]
 then
   brew reinstall node flow watchman xctool
+  gem install cocoapods --pre
 elif [ "$BUILD_TYPE" = jobst-and ]
 then
   brew reinstall node gradle flow watchman android-sdk
