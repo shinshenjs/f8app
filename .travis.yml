@@ -1,15 +1,15 @@
 language: objective-c
 osx_image: xcode7.3
-xcode_project: ios/travisPOC.xcodeproj
-xcode_scheme: travisPOC
+xcode_project: ios/F8v2.xcodeproj
+xcode_scheme: F8v2
 sudo: false
-before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/travisPOC/node_modules/
+#before_cache:
+#  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+#cache:
+#  directories:
+#    - $HOME/.gradle/caches/
+#    - $HOME/.gradle/wrapper/
+#    - $HOME/travisPOC/node_modules/
 env:
   matrix:
     - BUILD_TYPE=jobst-ios
