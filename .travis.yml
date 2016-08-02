@@ -1,0 +1,43 @@
+language: objective-c
+osx_image: xcode7.3
+xcode_project: ios/travisPOC.xcodeproj
+xcode_scheme: travisPOC
+sudo: false
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/travisPOC/node_modules/
+env:
+  matrix:
+    - BUILD_TYPE=jobst-ios
+    - BUILD_TYPE=jobst-and
+  global:
+    - ANDROID_HOME=/usr/local/opt/android-sdk
+before_install: ./travis/scripts/before_install.sh
+install: ./travis/scripts/install.sh
+script: ./travis/scripts/script.sh
+before_deploy: ./travis/scripts/before_deploy.sh
+deploy:
+  - provider: releases
+    api_key:
+      secure: WqrNw52tQcFwgBai9UOiYIJHIBdMJse+PaInHNgHThgZ7xiF2nLqlX8AwyVdQUm1/WXUoPOk3J374DHF7lbLjBpBdEFvlLwpIlabV3MdNYS+B/Vwxdd16rIER02d3CQAMug93jVXlBAFmfKybR9zjxkoLTwzgwC+mlrh53XPERF9WRKPQW4mejpjS0LhHEYFHjNcN+ara0effJdngsX8ufeB7bol7b0VHISe5poiVfAw6XLYwJ6WpfqtPCoQGQ1dPpPTGAnJXTtk+7dUzj44/1D2SVt4m6BRhB+C91+ZqDHIJ1BxEzmqLMhEkmbospJD31FJav5HOna8EbXhqRf6i/MxUNZNe4jYh6alI1J9ALkQgUrqBxy09NjDe6cjJflEMiUX0PpLoVQa/kJdP/Qe3l6iovMbvX3bkpdDKrHfoOwn+PUBu+HfZAX8pynTwitLkCm2N4EmFcgTLFPNj/40K1/+YEwvgvMREyTDcNsy4UOPV2c4opo/hqM7qASKnWgsZ0FldwXyJ7Zkse4715ENSCjC3ZlD8mWoJstTitwyG6wk4d901wxFTE8bd6b5jTPY6zORBblCZmEwgFOzwprEAeuaYA+z46jbi4xQhjpx1UXg9/LssIYrx1hsHwmaAVKn7WMGMMGdyKBAGGCjcJ787fWDCVeKiLJiBOESB/EWKVA=
+    file: "./android/app/build/outputs/apk/$BUILD_TYPE.apk"
+    skip_cleanup: true
+    on:
+      tags: true
+      condition: $BUILD_TYPE = jobst-and
+  - provider: releases
+    api_key:
+      secure: WqrNw52tQcFwgBai9UOiYIJHIBdMJse+PaInHNgHThgZ7xiF2nLqlX8AwyVdQUm1/WXUoPOk3J374DHF7lbLjBpBdEFvlLwpIlabV3MdNYS+B/Vwxdd16rIER02d3CQAMug93jVXlBAFmfKybR9zjxkoLTwzgwC+mlrh53XPERF9WRKPQW4mejpjS0LhHEYFHjNcN+ara0effJdngsX8ufeB7bol7b0VHISe5poiVfAw6XLYwJ6WpfqtPCoQGQ1dPpPTGAnJXTtk+7dUzj44/1D2SVt4m6BRhB+C91+ZqDHIJ1BxEzmqLMhEkmbospJD31FJav5HOna8EbXhqRf6i/MxUNZNe4jYh6alI1J9ALkQgUrqBxy09NjDe6cjJflEMiUX0PpLoVQa/kJdP/Qe3l6iovMbvX3bkpdDKrHfoOwn+PUBu+HfZAX8pynTwitLkCm2N4EmFcgTLFPNj/40K1/+YEwvgvMREyTDcNsy4UOPV2c4opo/hqM7qASKnWgsZ0FldwXyJ7Zkse4715ENSCjC3ZlD8mWoJstTitwyG6wk4d901wxFTE8bd6b5jTPY6zORBblCZmEwgFOzwprEAeuaYA+z46jbi4xQhjpx1UXg9/LssIYrx1hsHwmaAVKn7WMGMMGdyKBAGGCjcJ787fWDCVeKiLJiBOESB/EWKVA=
+    file: "$HOME/travisPOC/ios/build/Release-iphoneos/$BUILD_TYPE.ipa"
+    skip_cleanup: true
+    on:
+      tags: true
+      condition: $BUILD_TYPE = jobst-ios
+notifications:
+  slack:
+    secure: D+raY1hvc4HIKKEwlZPjWZ+7RsmgZa63mcUEUwM9O960pmX7uHOR9lruYPl4V2wkoGwAKzmb69cUazlzmFMSvcyagMP4x73faRD+lv4yGjj3aOiH5SOmRFIUNJ0XJkmxU75gquyd0Yr2tkDNYNuNT2B1+F3YBFlm6xGLgb1LdV18kaq1jwOYRtirh8CeHiSpBVjuwUmcIsavMNPAT0W77S/oZL2CIFIlUPZZqCS0ka73ZHDIi05SVmGWbYkPH8s+XSjVZzYzQCxIM1xvk2SwIj0dVZSVAmbVUzT7+PI8NPRZCI9EO4+duRoop1A67G6vuPHjOYqp2uYAstm3gQVznHTruKnDBME0D+ocM83F/qy9V2JtJrnPmU92hI3RKdyFXN45BRmCS1LME59y/rJFXl7pHkQET3nkFNibudX5h/9KWmBSI6PXQpueIyVq2zQFqK3AK4hKR1slFp/aBE5/q6QdJsMuzp/bZJIGj/ibbxUZ9yCg+WbN7/6Ch/cFe1XVB9xmHYLOYUoarXsNjlplYnClLYnBGXrKn7JAacYjXBWlz1XOok94e18kbtwauRctBaKwBvsnQ+DX2q5CWZU5AV7nySUJSnkx4Q2uOrM2tZ+dZjTrxzQ5ow6LoLZzzZ60UGQuLcgggzomAUjolWX1gf0f6v2hr+vetrbVRX56w2A=
+
