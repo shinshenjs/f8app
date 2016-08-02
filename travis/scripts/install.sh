@@ -9,7 +9,7 @@ then
   brew reinstall node gradle flow watchman android-sdk
   echo ">> Installing necessary android extension..."
   echo "y" | android update sdk --no-ui --filter android-23
-  echo "y" | android update sdk --all --no-ui --filter build-tools-23.0.1
+  echo "y" | android update sdk --all --no-ui --filter build-tools-23.0.2
   echo "y" | android update sdk --all --no-ui --filter extra-android-m2repository
 fi
 echo ">> Installing react-native-cli..."
