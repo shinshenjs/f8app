@@ -26,11 +26,11 @@ then
 elif [ "$BUILD_TYPE" = jobst-and  ]
 then
   echo ">> Decrypt Keystore"
-  openssl aes-256-cbc -k ${ENCRYPT_PASS} -in travis/scripts/cert/travisPOC.keystore.enc -out travis/scripts/cert/travisPOC.keystore -d -a
-  mv travis/scripts/cert/travisPOC.keystore android/app/travisPOC.keystore
+  #openssl aes-256-cbc -k ${ENCRYPT_PASS} -in travis/scripts/cert/travisPOC.keystore.enc -out travis/scripts/cert/travisPOC.keystore -d -a
+  mv travis/scripts/cert/f8app.jks android/app/f8app.jks
   echo ">> Set Gradle Properties"
-  echo "RELEASE_STORE_FILE=travisPOC.keystore" >> ~/.gradle/gradle.properties
+  echo "RELEASE_STORE_FILE=f8app.jks" >> ~/.gradle/gradle.properties
   echo "RELEASE_KEY_ALIAS=travis-poc" >> ~/.gradle/gradle.properties
-  echo "RELEASE_STORE_PASSWORD=$ENCRYPT_PASS" >> ~/.gradle/gradle.properties
-  echo "RELEASE_KEY_PASSWORD=$ENCRYPT_PASS" >> ~/.gradle/gradle.properties
+  echo "RELEASE_STORE_PASSWORD=seekasia" >> ~/.gradle/gradle.properties
+  echo "RELEASE_KEY_PASSWORD=seekasia" >> ~/.gradle/gradle.properties
 fi
